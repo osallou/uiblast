@@ -17,10 +17,7 @@
       google.load("visualization", "1", {packages:["corechart"]});
       google.setOnLoadCallback(drawChart);
       function drawChart() {
-      	getXML();
-        //data = new google.visualization.DataTable();
-        //data = new google.visualization.ScatterChart(document.getElementById('chart_div'));
-
+      	//getXML();
       }
       
     </script>
@@ -69,6 +66,8 @@ $(document).ready(  function()
 	sequences = new Array();
 	
 	iterations = new Array();
+
+	$( "#blasttabs" ).tabs();
 	
 	$("#iteration_list").change(function(e){
 		var iter_selected="";
@@ -95,6 +94,22 @@ $(document).ready(  function()
  	});
  	
 
+        $("#demo").button();
+        $("#demo").click(function(e){
+		xmlUrl = "demo/blast.xml";
+		$('#blasttabs').tabs().tabs('select',1);
+		getXML();
+
+        });
+
+        $("#remotexml").button();
+        $("#remotexml").click(function(e){
+                xmlUrl = $('#remotexmlurl').val();
+                $('#blasttabs').tabs().tabs('select',1);
+                getXML();
+
+        });
+
  	
 	$("#sortScore").button();
 	$("#sortScore").click(function(e){
@@ -113,13 +128,6 @@ $(document).ready(  function()
 
 	var position = getPosition(e,document.getElementById("blastcanvas"));
 	var y = Math.floor(position.Y/10);
-    //alert("id "+y+" "+sequences[y]["hitnum"]+"-"+sequences[y]["hspnum"]);
-       if($.getURLParam("file")==null) {
-          xmlUrl = "demo/blast.xml";
-       }
-       else {
-          xmlUrl = $.getURLParam("file");
-       } 
     window.open("sequence.html?hitnum="+sequences[y]["hitnum"]+"&hspnum="+sequences[y]["hspnum"]+"&file="+xmlUrl);
     //http://localhost/test/sequence.html?hitnum=1
     
@@ -234,12 +242,6 @@ function getHits(iter_id, iteration) {
 }
 
 function getXML() {
-if($.getURLParam("file")==null) {
- xmlUrl = "demo/blast.xml";
-}
-else {
- xmlUrl = $.getURLParam("file");
-}
 $.ajax( {
             type: "GET",
             url: xmlUrl,
@@ -318,8 +320,26 @@ $.ajax( {
 </div>
 
 <div class="content">
-
-<div id="blast" class="label"></div>
+<div id="blasttabs">
+<ul>
+<li><a href="#tab-upload">File selection</a></li>
+<li><a href="#tab-blast">View</a></li>
+</ul>
+<div id="tab-upload">
+<h2>Select Blast XML file</h2>
+<div>
+<div>
+<button id="demo">View demo</button>
+</div>
+<div>
+<label for="blasturl">Blast XML file URL</label>
+<input type="text" id="remotexmlurl"></input>
+<button id="remotexml">View remote XML file</button>
+</div>
+</div>
+</div>
+<div id="tab-blast">
+<!-- <div id="blast" class="label"></div> -->
 
 <div id="iteration_div">
 <form action="#">
@@ -342,6 +362,8 @@ $.ajax( {
 </div>
 <div id="legend">ID - SCORE - SEQUENCE, click on a sequence for details</div>
 <canvas id="blastcanvas" width="1200" height="6000"></canvas>
+</div>
+</div> 
 </div>
 <div class="footer"></div>
 
