@@ -1,4 +1,6 @@
-
+/**
+* Return a specific iteration from iterations
+*/
 function getIterationHits(count) {
    return iterations[count]["hits"];
 }
@@ -11,11 +13,17 @@ function sortFrom(a,b){
         return b.from - a.from;
 }
 
+/**
+* Open a new window with the saved image from returned url
+*/
 function savecallbackFunction() {
         var result = ajax.responseText;
         window.open("img/"+result);
 }
 
+/**
+* Clear canvas content
+*/
 function clearCanvas() {
 	context.save();
 	context.fillStyle = "white";
@@ -23,6 +31,10 @@ function clearCanvas() {
 	context.restore();
 }
 
+/**
+* Draw the sequences in the canvas, between the min and max positions.
+*
+*/
 function drawSequences(min,max) {
 	clearCanvas();
 	max = parseInt(max);
@@ -58,6 +70,10 @@ function drawSequences(min,max) {
 	yPos=10;
 }
 
+/**
+* Get the Hits for iteration id in iteration.
+* Update the iterations array.
+*/
 function getHits(iter_id, iteration) {
 	var iter = [];
         iter["id"] = iter_id;
@@ -98,7 +114,9 @@ function getHits(iter_id, iteration) {
 
 }
 
-
+/**
+* Resets the graphical canvas and the chart
+*/
 function resetCanvas() {
 
         document.getElementById("blastcanvas").height=(sequences.length*10)+50;
