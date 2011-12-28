@@ -100,7 +100,7 @@ $(document).ready(  function()
 
         $("#remotexml").button();
         $("#remotexml").click(function(e){
-                xmlUrl = $('#remotexmlurl').val();
+                xmlUrl = "getRemoteXML.php?url="+encodeURI($('#remotexmlurl').val());
                 $('#blasttabs').tabs().tabs('select',1);
                 getXML();
 
@@ -123,7 +123,7 @@ $(document).ready(  function()
 	 $("#blastcanvas").click(function(e){
 		var position = getPosition(e,document.getElementById("blastcanvas"));
 		var y = Math.floor(position.Y/10);
-		window.open("sequence.html?hitnum="+sequences[y]["hitnum"]+"&hspnum="+sequences[y]["hspnum"]+"&file="+xmlUrl);
+		window.open("sequence.html?hitnum="+sequences[y]["hitnum"]+"&hspnum="+sequences[y]["hspnum"]+"&file="+encodeURI($('#remotexmlurl').val()));
     		//http://localhost/test/sequence.html?hitnum=1
  	});
 	

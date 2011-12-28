@@ -35,7 +35,8 @@ $(document).ready(  function() {
  		xmlUrl = "demo/blast.xml";
 	}
 	else {
- 		xmlUrl = $.getURLParam("file");
+ 		//xmlUrl = $.getURLParam("file");
+		xmlUrl = "getRemoteXML.php?url="+$.getURLParam("file");
 	}
 	getXML(xmlUrl);
 
