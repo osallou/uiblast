@@ -28,7 +28,7 @@ function sortFrom(a,b){
 */
 function savecallbackFunction() {
         var result = ajax.responseText;
-        window.open("img/"+result);
+        window.open("img/tmp/"+result);
 }
 
 /**
