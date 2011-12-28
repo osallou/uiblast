@@ -1,4 +1,14 @@
 /**
+* Library for index.html, managing a blast alignement display
+*
+* Author: Olivier Sallou <olivier.sallou@irisa.fr>
+*
+*/
+
+
+
+
+/**
 * Return a specific iteration from iterations
 */
 function getIterationHits(count) {
@@ -52,19 +62,39 @@ function drawSequences(min,max) {
                                         
                 var from = sequence["from"];
                 var to = sequence["to"];
+		/*
+			min<------------------------------->max
+			            ----- case1
+
+						----------------- case2
+
+		  ------------- case3
+
+		   ----------------------------------------------- case4
+
+                  ---- case5
+								------- case6
+
+		*/
        
                 if((from>=min && from<=max)&&(to>=min && to<=max)) {
+			// case1 : complete sequence is between min and max
                 	context.fillText(sequence["seq"], xPos+Xseq+from-min, yPos);
                 }
                 else if(from>=min && from<=max) {
+			// case2
                         context.fillText(sequence["seq"].substring(0,max-from), xPos+Xseq+from-min, yPos);
                 }
                 else if(to>=min && to<=max) {
-                	context.fillText(sequence["seq"].substring(min-from,max-min), xPos+Xseq, yPos);
+			// case3
+                	//context.fillText(sequence["seq"].substring(min-from,max-min), xPos+Xseq, yPos);
+			context.fillText(sequence["seq"].substring(min-from), xPos+Xseq, yPos);
                 }
                 else if(from<=min && to>=max) {
+			// case 4
                         context.fillText(sequence["seq"].substring(min-from,max-from), xPos+Xseq, yPos);
                 }
+		// if none match, case 5 and 6, nothing to display for sequence
                 yPos+=step;                     
 	}
 	yPos=10;

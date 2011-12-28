@@ -1,0 +1,16 @@
+
+* Requirements *
+
+This software needs a web server with PHP enabled for additional features loading and image save function.
+The rest of the software is pure web (HTML+Javascript).
+
+The img/tmp directory must be writable by the web server to create images when "save alignment image" is selected.
+Images in directory can be safely cleaned by a cron task to remove old images.
+
+* Configuration *
+
+If a seqcrawler server is available to extract additional features, then configuration must be updated
+in features.php, the URL need to be adapted to the seqcrawler server.
+
+In the other case, useFeatures must be set to 0 in js/uiseqblast.js
+

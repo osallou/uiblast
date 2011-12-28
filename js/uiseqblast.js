@@ -1,3 +1,19 @@
+/**
+* Library for sequence.html, managing a Hit alignement display and additional features extraction
+*
+* Author: Olivier Sallou <olivier.sallou@irisa.fr>
+*
+*/
+
+/**
+* Configuration
+*/
+useFeatures = 1;
+
+
+/**
+* Clear the canvas
+*/
 function clearCanvas() {
 	context.save();
 	context.fillStyle = "white";
@@ -6,6 +22,9 @@ function clearCanvas() {
 }
 
 
+/**
+* Draw Hsps for the selected Hit between min and max position
+*/
 function drawSequences(min,max) {
 clearCanvas();
 max = parseInt(max);
@@ -92,12 +111,15 @@ for (var i=0;i<sequences.length;i++)
                 context.fillText(sequence["seq"].substring(min-from,max-from), xPos+Xseq, yPos);
         }
         yPos+=step;
-        addFeatures(sequence,max,min);
+        if(useFeatures==1) { addFeatures(sequence,max,min); }
                                         
 }
 yPos=20;
 }
 
+/**
+* Draw a filler (blank)
+*/
 function drawFiller(x) {
 	var empty="";
          for(var j=0;j<x;j++) {
@@ -107,6 +129,9 @@ function drawFiller(x) {
 	 return empty;
 }
 
+/**
+* Draw feature in canvas with input parameters
+*/
 function drawFeature(x,y,size,text,title) {
         var empty=drawFiller(x);
         var spaced="";
@@ -122,6 +147,9 @@ function drawFeature(x,y,size,text,title) {
         }
 }
 
+/**
+* Add features aligned with sequence alignment between min and max positions
+*/
 function addFeatures(sequence,max,min) {
         if(sequence["features"]!=null) {
         	for (var i=0;i<sequence["features"].length;i++) {
@@ -157,7 +185,9 @@ function addFeatures(sequence,max,min) {
         context.fillStyle="black";
 }
 
-
+/**
+* Load XML file from input URL, extract Hit from hitnum parameter and load additional features with a call to features.php
+*/
 function getXML(xmlUrl) {
 
 $.ajax( {
@@ -185,7 +215,7 @@ $.ajax( {
                 
                         		if(hspnum==$.getURLParam("hspnum")) {
                         			$("#documentDetails" ).html('<p class="wait"><img title="loading" alt="loading" src="img/waiting.gif"/></p>');
-                                		$("#documentDetails" ).dialog({ title: 'Loading, please wait' , width : '200px'  });
+                                		$("#documentDetails" ).dialog({ title: 'Loading features, please wait' , width : '200px'  });
                                         	$.get("features.php?id="+accession+"&from="+$(this).find('Hsp_hit-from').text()+"&to="+$(this).find('Hsp_hit-to').text(),
                                            		function(jsonFeatures){
                             					$("#documentDetails" ).dialog( "close" );
