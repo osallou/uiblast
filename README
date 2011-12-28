@@ -14,3 +14,7 @@ in features.php, the URL need to be adapted to the seqcrawler server.
 
 In the other case, useFeatures must be set to 0 in js/uiseqblast.js
 
+* Usage *
+
+If the parameter file with a valid url is given at index.html page call, URL si automatically loaded and data is
+ displayed.

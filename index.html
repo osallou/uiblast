@@ -106,6 +106,13 @@ $(document).ready(  function()
 
         });
 
+	if($.getURLParam("file")) {
+		$('#remotexmlurl').val(decodeURI($.getURLParam("file")));
+		xmlUrl = "getRemoteXML.php?url="+encodeURI($('#remotexmlurl').val());
+                $('#blasttabs').tabs().tabs('select',1);
+                getXML();
+	}
+
  	
 	$("#sortScore").button();
 	$("#sortScore").click(function(e){
