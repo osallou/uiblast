@@ -1,0 +1,45 @@
+.label {
+    background-color: orange;
+    margin: 10px;
+    padding: 10px;
+    border-radius: 15px;
+}
+
+
+.selector{
+
+	margin-top: 50px;
+
+}
+
+
+.content {
+	min-width:1200px;
+	margin : 50px;
+	padding: 20px;
+	border-radius: 15px;
+	background-color: white;
+	min-height: 80%;
+}
+
+.header {
+ border-radius: 15px;
+ background-color: white;
+ padding: 20px;
+ background-image:url("../img/coffee_beans_in_cup.jpg");
+ background-repeat:no-repeat;
+ background-position:right;
+ font-size: 2em;
+ font-weight: bold;
+}
+
+
+body {
+	background-color: fireBrick;
+}
+
+.footer {
+ background-image:url("../img/food_030.jpg");
+ min-height: 120px;
+ min-width: 1200px;
+}
