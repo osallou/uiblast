@@ -174,6 +174,7 @@ $.ajax( {
 <ul>
 <li><a href="#tab-upload">File selection</a></li>
 <li><a href="#tab-blast">View</a></li>
+<li><a href="#tab-about">About</a></li>
 </ul>
 <div id="tab-upload">
 <h2>Select Blast XML file</h2>
@@ -213,8 +214,17 @@ $.ajax( {
 <div id="legend">ID - SCORE - SEQUENCE, click on a sequence for details</div>
 <canvas id="blastcanvas" width="1200" height="6000"></canvas>
 </div>
-</div> 
+<div id="tab-about">
+<p>This blast visualization tool takes as input a Blast XML result file (its URL).</p>
+<p>It displays the results in a graphical way with a plot of hits with their score. List can be ordered by score or position.</p>
+<p>If a sequence is selected, a new window is opened to get the details of the alignment and the seqcrawler tool is triggered to
+try to get additional information (genes for example) from our index (Genbank, Bacteria, UniProt/SwissProt). If information is available, it is displayed 
+with the alignment at the corresponding position.</p>
+<p>This tool is a GenOuest platform product (open source), while still experimental.</p>
+<p>Contact: <a href="mailto:support@genouest.org">support[at]genouest.org</a></p>
 </div>
+</div> <!-- blasttabs -->
+</div> <!-- content -->
 <div class="footer"></div>
 
 </body>
