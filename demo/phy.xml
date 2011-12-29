@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<phyloxml xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.phyloxml.org http://www.phyloxml.org/1.10/phyloxml.xsd" xmlns="http://www.phyloxml.org">
+<phylogeny rooted="false">
+  <clade>
+    <clade>
+      <name>0.991000</name>
+      <branch_length>0.97683828</branch_length>
+      <clade>
+        <name>Beta</name>
+        <branch_length>1.0E-8</branch_length>
+      </clade>
+      <clade>
+        <name>0.000000</name>
+        <branch_length>2.533E-5</branch_length>
+        <clade>
+          <name>Gamma</name>
+          <branch_length>0.40341231</branch_length>
+        </clade>
+        <clade>
+          <name>Alpha</name>
+          <branch_length>0.33155459</branch_length>
+        </clade>
+      </clade>
+    </clade>
+    <clade>
+      <name>Epsilon</name>
+      <branch_length>4.249E-5</branch_length>
+    </clade>
+    <clade>
+      <name>Delta</name>
+      <branch_length>0.1749258</branch_length>
+    </clade>
+  </clade>
+</phylogeny>
+
+</phyloxml>
