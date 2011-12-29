@@ -67,6 +67,7 @@ function drawSelection(start,stop) {
 */
 function drawSequences(min,max) {
 clearCanvas();
+clearSelectCanvas();
 max = parseInt(max);
 min = parseInt(min);
 
@@ -99,7 +100,7 @@ for (var i=0;i<sequences.length;i++)
 		maxseq = i;
 	}
 }
-var requiredWidth = xPos+Xseq+context.measureText(sequences[maxseq]["seq"]).width+50;
+var requiredWidth = Math.min(xPos+Xseq+context.measureText(sequences[maxseq]["seq"]).width+50,xPos+Xseq+context.measureText(sequences[maxseq]["seq"].substring(0,500)).width+50);
 $("#canvas-layers").height(requiredHeight);
 $("#canvas-layers").width(requiredWidth);
 document.getElementById("blastsequencecanvas").height = requiredHeight;
@@ -107,6 +108,7 @@ document.getElementById("blastselectcanvas").height = requiredHeight;
 document.getElementById("blastsequencecanvas").width = requiredWidth;
 document.getElementById("blastselectcanvas").width = requiredWidth;
 clearCanvas();
+clearSelectCanvas();
 if($.getURLParam("debug")==1) {
 	console.log("required height: "+requiredHeight);
 	console.log("required width:  "+requiredWidth);
@@ -309,9 +311,6 @@ $.ajax( {
                                 				}
                                 				if(feature["to"]<0) {
                                         				feature["to"]=0;
-                                				}
-                                				if(feature["from"]<0) {
-                                        				feature["from"]=0;
                                 				}
                                 				feature["title"]= docs[doc]["feature"]+" "+docs[doc]["start"]+"-"+docs[doc]["end"];
                                 				feature["text"]= docs[doc]["attributes"];
