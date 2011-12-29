@@ -17,8 +17,48 @@ useFeatures = 1;
 function clearCanvas() {
 	context.save();
 	context.fillStyle = "white";
-	context.fillRect(0, 0, document.getElementById("blastcanvas").width, document.getElementById("blastcanvas").height);
+	context.fillRect(0, 0, document.getElementById("blastsequencecanvas").width, document.getElementById("blastsequencecanvas").height);
 	context.restore();
+}
+
+function clearSelectCanvas() {
+        selectcontext.save();
+	//selectcontext.fillStyle = "white";
+        selectcontext.clearRect(0, 0, document.getElementById("blastselectcanvas").width, document.getElementById("blastselectcanvas").height);
+        selectcontext.restore();
+}
+
+/**
+* Get mouse position
+*/
+function getPosition(mouseEvent,currentElement){
+    var totalOffsetX = 0;
+    var totalOffsetY = 0;
+    var canvasX = 0;
+    var canvasY = 0;
+
+    do{
+        totalOffsetX += currentElement.offsetLeft;
+        totalOffsetY += currentElement.offsetTop;
+    }
+    while(currentElement = currentElement.offsetParent)
+
+    canvasX = event.pageX - totalOffsetX;
+    canvasY = event.pageY - totalOffsetY;
+
+    return {X:canvasX, Y:canvasY}
+}
+
+
+/**
+* Draw a rect over selection
+*/
+function drawSelection(start,stop) {
+	selectcontext.save();
+	selectcontext.globalAlpha = 0.5;
+	selectcontext.fillStyle = "black";
+	selectcontext.fillRect(start.X,start.Y,stop.X-start.X,stop.Y-start.Y);
+	selectcontext.restore();
 }
 
 
@@ -46,6 +86,32 @@ min = parseInt(min);
               <Hsp_align-len>1522</Hsp_align-len>
         */
 
+// Canvas height ?
+var requiredHeight = (sequences[2]["features"].length * step * 2) + (10 * step) + step;
+var maxlen=0;
+var maxseq=0;
+// search sequence with maximal length
+for (var i=0;i<sequences.length;i++)
+{
+        var sequence = sequences[i];
+	if(sequence["len"]>maxlen) {
+		maxlen = sequence["len"];
+		maxseq = i;
+	}
+}
+var requiredWidth = xPos+Xseq+context.measureText(sequences[maxseq]["seq"]).width+50;
+$("#canvas-layers").height(requiredHeight);
+$("#canvas-layers").width(requiredWidth);
+document.getElementById("blastsequencecanvas").height = requiredHeight;
+document.getElementById("blastselectcanvas").height = requiredHeight;
+document.getElementById("blastsequencecanvas").width = requiredWidth;
+document.getElementById("blastselectcanvas").width = requiredWidth;
+clearCanvas();
+if($.getURLParam("debug")==1) {
+	console.log("required height: "+requiredHeight);
+	console.log("required width:  "+requiredWidth);
+	console.log("nb features: "+sequences[2]["features"].length);
+}
 
 for (var i=0;i<sequences.length;i++)
 {
@@ -189,7 +255,7 @@ function addFeatures(sequence,max,min) {
 * Load XML file from input URL, extract Hit from hitnum parameter and load additional features with a call to features.php
 */
 function getXML(xmlUrl) {
-
+if($.getURLParam("debug")==1) { useFeatures=0; }
 $.ajax( {
             type: "GET",
             url: xmlUrl,
@@ -213,7 +279,7 @@ $.ajax( {
                    			seqlen = $(this).find('Hsp_align-len').text();
 
                 
-                        		if(hspnum==$.getURLParam("hspnum")) {
+                        		if(hspnum==$.getURLParam("hspnum") && useFeatures==1) {
                         			$("#documentDetails" ).html('<p class="wait"><img title="loading" alt="loading" src="img/waiting.gif"/></p>');
                                 		$("#documentDetails" ).dialog({ title: 'Loading features, please wait' , width : '200px'  });
                                         	$.get("features.php?id="+accession+"&from="+$(this).find('Hsp_hit-from').text()+"&to="+$(this).find('Hsp_hit-to').text(),

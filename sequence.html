@@ -17,7 +17,9 @@
 
 <script type = "text/javascript">
 $(document).ready(  function() {
-    	context = document.getElementById("blastcanvas").getContext("2d");
+    	context = document.getElementById("blastsequencecanvas").getContext("2d");
+	selectcontext = document.getElementById("blastselectcanvas").getContext("2d");
+	selectcontext.globalAlpha = 0.5;
     	initDone=0;
     	yPos = 20;
     	xPos = 20;
@@ -31,6 +33,9 @@ $(document).ready(  function() {
 	maxSlicer = 500;
 	accession="";
 	sequences = new Array();
+	mouseStart = null;
+	mouseStop = null;
+
 	if($.getURLParam("file")==null) {
  		xmlUrl = "demo/blast.xml";
 	}
@@ -39,6 +44,21 @@ $(document).ready(  function() {
 		xmlUrl = "getRemoteXML.php?url="+$.getURLParam("file");
 	}
 	getXML(xmlUrl);
+
+         $("#blastselectcanvas").mousedown(function(e){
+                mouseStart = getPosition(e,document.getElementById("blastselectcanvas"));
+        });
+
+         $("#blastselectcanvas").mouseup(function(e){
+                mouseStop = getPosition(e,document.getElementById("blastselectcanvas"));
+		drawSelection(mouseStart,mouseStop);
+		mouseStart = null;
+		mouseStop = null;
+        });
+
+         $("#blastselectcanvas").dblclick(function(e){
+                clearSelectCanvas();
+        });
 
 
 });  
@@ -49,12 +69,15 @@ $(document).ready(  function() {
 <div id="zoomin">plus</div>
 <div id="zoomout">minus</div>
 -->
+<div class="content">
 <div id="blast" class="label"></div>
 <div id="selector" class="selector">
 <div id="seqslider" class="slider"></div>
 </div>
-<canvas id="blastcanvas" width="3500" height="1000"></canvas>
+<div id="canvas-layers" style="position:relative; width:3500px; height:100px">
+<canvas id="blastsequencecanvas" width="3500" height="100"></canvas>
+<canvas id="blastselectcanvas" width="3500" height="100"></canvas>
 <div id="documentDetails"/>
-
+</div>
 </body>
 </html>

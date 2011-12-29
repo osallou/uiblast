@@ -43,3 +43,17 @@ body {
  min-height: 120px;
  min-width: 1200px;
 }
+
+#blastsequencecanvas {
+ z-index: 1;
+ position:absolute;
+ left:0px;
+ top:0px;
+}
+
+#blastselectcanvas {
+ z-index: 2;
+ position:absolute;
+ left:0px;
+ top:0px;
+}

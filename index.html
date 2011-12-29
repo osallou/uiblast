@@ -29,18 +29,6 @@
 
 <script type = "text/javascript">
 
-function getPosition(mouseEvent, element) {
-    var x, y;
-    if (mouseEvent.pageX != undefined && mouseEvent.pageY != undefined) {
-        x = mouseEvent.pageX;
-        y = mouseEvent.pageY;
-    } else {
-        x = mouseEvent.clientX + document.body.scrollLeft + document.documentElement.scrollLeft;
-        y = mouseEvent.clientY + document.body.scrollTop + document.documentElement.scrollTop;
-    }
-    return { X: x - element.offsetLeft, Y: y - element.offsetTop };
-}
-
 
 $(document).ready(  function()
                     {
@@ -93,6 +81,7 @@ $(document).ready(  function()
         $("#demo").button();
         $("#demo").click(function(e){
 		xmlUrl = "demo/blast.xml";
+		$('#remotexmlurl').val(xmlUrl);
 		$('#blasttabs').tabs().tabs('select',1);
 		getXML();
 
