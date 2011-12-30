@@ -44,7 +44,7 @@ $(document).ready(  function()
         $("#remotexml").click(function(e){
                 xmlUrl = "getRemoteXML.php?url="+encodeURI($('#remotexmlurl').val());
                 $('#blasttabs').tabs().tabs('select',1);
-		if(xmlUrl.match(/\.xml$/)) {
+		if(!xmlUrl.match(/\.xml$/)) {
                 $.ajax( {
                         type: "GET",
                         url: xmlUrl,
@@ -74,7 +74,7 @@ $(document).ready(  function()
                 xmlUrl = "getRemoteXML.php?url="+$.getURLParam("file");
 		$('#remotexmlurl').val(decodeURI($.getURLParam("file")));
 		$('#blasttabs').tabs().tabs('select',1);
-                if(xmlUrl.match(/\.xml$/)) {
+                if(!xmlUrl.match(/\.xml$/)) {
                 $.ajax( {
                         type: "GET",
                         url: xmlUrl,
@@ -101,6 +101,7 @@ $(document).ready(  function()
 }); 
 
 function drawNewick(xml) {
+	console.log('draw Newick');
         var phylocanvas = new Smits.PhyloCanvas(
                  xml,             // Newick or XML string
                 'phyCanvas',    // Div Id where to render
@@ -127,7 +128,7 @@ function drawPhy(xml) {
 </script>
 
 <div class="header">
-GenOuest PhyXML display
+GenOuest PhyXML/Newick display
 </div>
 
 <div class="content">
