@@ -1,4 +1,3 @@
-
 * Requirements *
 
 This software needs a web server with PHP enabled for additional features loading and image save function.
@@ -18,3 +17,6 @@ In the other case, useFeatures must be set to 0 in js/uiseqblast.js
 
 If the parameter file with a valid url is given at index.html page call, URL is automatically loaded and data is
  displayed.
+
+index.html is default page for blast results.
+uiphy.html is a phylogenetic tree viewer in HTML/Javascript.
