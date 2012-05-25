@@ -1,6 +1,6 @@
 <html>
 <head>
-<script src="js/jquery-1.5.1.min.js"></script>
+<script src="js/jquery-1.7.2.min.js"></script>
 <script src="jquery.mousewheel.min.js"></script>
 <link rel="stylesheet" href="css/smoothness/jquery-ui-1.8.13.custom.css">  
 <link rel="stylesheet" href="css/dev.css">
@@ -32,7 +32,7 @@
 
 $(document).ready(  function()
                     {
-
+        imagedata = null;
     	context = document.getElementById("blastcanvas").getContext("2d");
     	initDone=0;
     	yPos = 10;
@@ -122,6 +122,72 @@ $(document).ready(  function()
 		window.open("sequence.html?hitnum="+sequences[y]["hitnum"]+"&hspnum="+sequences[y]["hspnum"]+"&file="+encodeURI($('#remotexmlurl').val()));
     		//http://localhost/test/sequence.html?hitnum=1
  	});
+
+         zoom = false;
+         $("#zoom").button();
+         $("#zoom").click(function(e){
+           if(zoom==false) {
+             zoom = true;
+	     $('#zoom').css('border-style','inset');
+             imagedata = context.getImageData(0,0,$("#blastcanvas").width(),$("#blastcanvas").height());
+           }
+           else {
+             zoom = false;
+	     $('#zoom').css('border-style','outset');
+           }
+         });
+         $("#blastcanvas").mousemove(function(e){
+           if(zoom) {
+                var position = getPosition(e,document.getElementById("blastcanvas"));
+		context.putImageData(imagedata,0,0);
+		magnify = context.getImageData(position.X-50,position.Y-step,100,3*step);
+		if(position.X>10 && position.X < ($("#blastcanvas").width()-10) && position.Y>10 && position.Y < ($("#blastcanvas").height()-10)) {
+                var y = Math.floor(position.Y/10);
+                sequence = sequences[y];
+		context.save();
+                context.fillStyle = "#000000";
+                context.fillRect (position.X-255, position.Y-55, 200 , 110);
+		context.fillStyle = "#F1EBEB";
+		context.fillRect (position.X-250, position.Y-50, 200 , 100);
+		context.font = step+"px  Courier New";
+		context.fillStyle = "#000000";
+		steppy = step * 1.5;
+		if(y>1) {
+		 sequence = sequences[y-1]; 
+		 context.fillText(sequence["id"], position.X - 240, position.Y - steppy);
+                }
+		sequence = sequences[y];
+                context.fillText(sequence["id"], position.X - 240, position.Y);
+                if(y<sequences.length-1) {
+                 sequence = sequences[y+1]; 
+                 context.fillText(sequence["id"], position.X - 240, position.Y + steppy);
+                }
+                context.strokeStyle = "#000000";
+		context.fillStyle = "#555";
+		context.beginPath();
+		context.arc(position.X,position.Y,115,0,Math.PI*2,true);
+		context.closePath();
+		context.stroke();
+		context.fill();
+                context.strokeStyle = "#000000";
+                context.fillStyle = "#F1EBEB";
+                context.beginPath();
+                context.arc(position.X,position.Y,110,0,Math.PI*2,true);
+                context.closePath();
+                context.stroke();
+                context.fill();
+		// Sequences:
+		var newCanvas = $("<canvas>")
+		    .attr("width", magnify.width)
+		    .attr("height", magnify.height)[0];
+		newCanvas.getContext("2d").putImageData(magnify, 0, 0);
+		context.scale(2, 2);
+		context.drawImage(newCanvas, position.X/2 - 50 , position.Y/2 - 15 );
+		context.restore();
+                }
+           }
+	});
+
 	
 
 }); 
@@ -204,6 +270,7 @@ GenOuest Blast XML display
 </div>
 <br/>
 <div id="savecanvas">Save alignment image</div>
+<div id="zoom">Zoom</div>
 <div id="selector" class="selector">
 <div id="seqslider" class="slider"></div>
 </div>
