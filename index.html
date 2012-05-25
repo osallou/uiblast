@@ -134,6 +134,7 @@ $(document).ready(  function()
            else {
              zoom = false;
 	     $('#zoom').css('border-style','outset');
+	     context.putImageData(imagedata,0,0);
            }
          });
          $("#blastcanvas").mousemove(function(e){
