@@ -62,6 +62,10 @@ $(document).ready(  function()
         	});
     		iter_cur = iter_selected-1;
     		sequences = getIterationHits(iter_cur);
+                zoom = false;
+                $('#zoom').css('border-style','outset');
+                context.putImageData(imagedata,0,0);
+
     		resetCanvas();
     
 	});
